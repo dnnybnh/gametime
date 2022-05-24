@@ -51,9 +51,21 @@ function App() {
     const response = await fetch(URL)
     const events = await response.json()
 
-    console.log(events)
+    // console.log(events)
 
-    setEventsList(events)
+    //newList[sort_order]
+
+    var newList = [];
+
+    Object.keys(events).forEach(key => {
+      if (key !== "display_groups") {
+        events[key].map((val) => {
+          newList[val.meta["sort_order"]] = val
+        })
+      }
+    });
+
+    setEventsList(newList)
   }
 
   useDebounce(searchQuery, 500, searchEvent)
